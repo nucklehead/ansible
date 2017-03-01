@@ -75,9 +75,15 @@ import shutil
 import stat
 import tempfile
 import traceback
-import grp
+try:
+    import grp
+except:
+    from ansible.module_utils import esxigrp as grp
 import pwd
-import platform
+try:
+    import platform
+except:
+    from ansible.module_utils import esxiplatform as platform
 import errno
 import datetime
 from itertools import repeat, chain

@@ -23,7 +23,10 @@ import shlex
 import errno
 import fnmatch
 import glob
-import platform
+try:
+    import platform
+except:
+    from ansible.module_utils import esxiplatform as platform
 import re
 import signal
 import socket
@@ -68,7 +71,7 @@ except ImportError:
 # It's in the SUNWPython-devel package which also contains development files
 # that don't belong on production boxes.  Since our Solaris code doesn't
 # depend on LooseVersion, do not import it on Solaris.
-if platform.system() != 'SunOS':
+if platform.system() not in ['SunOS', 'Esxi']:
     from distutils.version import LooseVersion
 
 
@@ -700,7 +703,7 @@ class Distribution(object):
         self.facts['distribution'] = self.system
         self.facts['distribution_release'] = platform.release()
         self.facts['distribution_version'] = platform.version()
-        systems_implemented = ('AIX', 'HP-UX', 'Darwin', 'FreeBSD', 'OpenBSD', 'SunOS', 'DragonFly', 'NetBSD')
+        systems_implemented = ('AIX', 'HP-UX', 'Darwin', 'FreeBSD', 'OpenBSD', 'SunOS', 'DragonFly', 'NetBSD', 'Esxi')
 
         self.facts['distribution'] = self.system
 
